@@ -3,32 +3,30 @@
 public class cCannon : MonoBehaviour 
 {
 	public GameObject m_CannonballHolder;
-	public GameObject m_CannonballTemplate;
-	public int m_ID = 0;
+	public PoolElement m_CannonballTemplate;
 
+   PoolElement m_CannonBall;
 	float m_fShotCooldown = 0.0f;
 
 	void Awake()
 	{
 		m_fShotCooldown = Random.Range( 0.0f, 2.0f );
+      m_CannonBall = Instantiate(m_CannonballTemplate);
+      m_CannonBall.Deactivate();
 	}
 
-	void Update()
+   void Start()
+   {
+      if (/*m_CannonballHolder == null ||*/ m_CannonballTemplate == null || m_CannonBall == null)
+         Debug.LogError("cCannon " + name + ": component non correctly initialized.");
+
+      if (m_CannonballHolder != null)
+         m_CannonBall.transform.SetParent(m_CannonballHolder.transform);
+   }
+
+   void Update()
 	{
-		cCannonball[] balls = GameObject.FindObjectsOfType<cCannonball>();
-
-		bool bFound = false;
-
-		for( int i = 0; i < balls.Length; i++ )
-		{
-			if( balls[i].m_ID == m_ID )
-			{
-				bFound = true;
-				break;
-			}
-		}
-
-		if( bFound == false )
+		if(!m_CannonBall.Alive())
 		{
 			m_fShotCooldown -= Time.deltaTime;
 
@@ -45,17 +43,11 @@ public class cCannon : MonoBehaviour
 
 	void Fire()
 	{
-		GameObject newBall = Instantiate<GameObject>( m_CannonballTemplate );
-		newBall.transform.position = transform.position + ( transform.forward + transform.up ) * 0.5f;
+      m_CannonBall.Reset();
+      m_CannonBall.transform.position = transform.position + ( transform.forward + transform.up ) * 0.5f;
 		Vector3 shotForce = ( transform.forward + transform.up * 0.35f ) * Random.Range( 12.0f, 15.0f );
-		newBall.GetComponent<Rigidbody>().AddForce( shotForce, ForceMode.Impulse );
-		newBall.GetComponent<cCannonball>().m_ID = m_ID;
+      m_CannonBall.GetComponent<Rigidbody>().AddForce( shotForce, ForceMode.Impulse );
 		m_fShotCooldown = Random.Range( 0.0f, 2.0f );
-
-		if( m_CannonballTemplate != null )
-		{
-			newBall.transform.SetParent( m_CannonballHolder.transform );
-		}
 
 		GetComponentInChildren<Renderer>().material.color = Color.red;
 	}

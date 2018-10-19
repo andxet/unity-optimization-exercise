@@ -160,6 +160,11 @@ Prefab:
       propertyPath: m_CannonballHolder
       value: 
       objectReference: {fileID: 1973217357}
+    - target: {fileID: 11423428, guid: 19ea62f66ae9d479da2f4f8f5d21d104, type: 2}
+      propertyPath: m_CannonballTemplate
+      value: 
+      objectReference: {fileID: 11425328, guid: 86ff5dfeb889949169e51ebee719fd66,
+        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 19ea62f66ae9d479da2f4f8f5d21d104, type: 2}
   m_IsPrefabAsset: 0
@@ -280,7 +285,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 486088, guid: 19ea62f66ae9d479da2f4f8f5d21d104, type: 2}
       propertyPath: m_LocalPosition.x
-      value: .5
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 486088, guid: 19ea62f66ae9d479da2f4f8f5d21d104, type: 2}
       propertyPath: m_LocalPosition.y
@@ -322,6 +327,11 @@ Prefab:
       propertyPath: m_CannonballHolder
       value: 
       objectReference: {fileID: 1973217357}
+    - target: {fileID: 11423428, guid: 19ea62f66ae9d479da2f4f8f5d21d104, type: 2}
+      propertyPath: m_CannonballTemplate
+      value: 
+      objectReference: {fileID: 11425328, guid: 86ff5dfeb889949169e51ebee719fd66,
+        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 19ea62f66ae9d479da2f4f8f5d21d104, type: 2}
   m_IsPrefabAsset: 0
@@ -377,6 +387,11 @@ Prefab:
       propertyPath: m_CannonballHolder
       value: 
       objectReference: {fileID: 1973217357}
+    - target: {fileID: 11423428, guid: 19ea62f66ae9d479da2f4f8f5d21d104, type: 2}
+      propertyPath: m_CannonballTemplate
+      value: 
+      objectReference: {fileID: 11425328, guid: 86ff5dfeb889949169e51ebee719fd66,
+        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 19ea62f66ae9d479da2f4f8f5d21d104, type: 2}
   m_IsPrefabAsset: 0
@@ -587,7 +602,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 486088, guid: 19ea62f66ae9d479da2f4f8f5d21d104, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -.5
+      value: -0.5
       objectReference: {fileID: 0}
     - target: {fileID: 486088, guid: 19ea62f66ae9d479da2f4f8f5d21d104, type: 2}
       propertyPath: m_LocalPosition.y
@@ -629,6 +644,11 @@ Prefab:
       propertyPath: m_CannonballHolder
       value: 
       objectReference: {fileID: 1973217357}
+    - target: {fileID: 11423428, guid: 19ea62f66ae9d479da2f4f8f5d21d104, type: 2}
+      propertyPath: m_CannonballTemplate
+      value: 
+      objectReference: {fileID: 11425328, guid: 86ff5dfeb889949169e51ebee719fd66,
+        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 19ea62f66ae9d479da2f4f8f5d21d104, type: 2}
   m_IsPrefabAsset: 0

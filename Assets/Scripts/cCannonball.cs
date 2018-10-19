@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class cCannonball : MonoBehaviour 
+public class cCannonball : PoolElement 
 {
 	public int m_ID = -1;
 
@@ -8,7 +8,7 @@ public class cCannonball : MonoBehaviour
 	{
 		if( transform.localPosition.y < -1.0f )
 		{
-			Destroy( gameObject );
+			Deactivate();
 		}
 	}
 
@@ -16,12 +16,12 @@ public class cCannonball : MonoBehaviour
 	{
 		if( other.name == "Ground" )
 		{
-			Destroy( gameObject );
-		}
+         Deactivate();
+      }
 		else if(  other.transform.parent != null && other.transform.parent.GetComponent<cTarget>() && other.transform.parent.GetComponent<cTarget>().IsAlive() )
 		{
-			other.transform.parent.GetComponent<cTarget>().DelayedDestroy();			
-			Destroy( gameObject );
+			other.transform.parent.GetComponent<cTarget>().DelayedDestroy();
+         Deactivate();
 		}
 	}
 }
