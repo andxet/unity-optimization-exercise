@@ -165,6 +165,10 @@ Prefab:
       value: 
       objectReference: {fileID: 11425328, guid: 86ff5dfeb889949169e51ebee719fd66,
         type: 2}
+    - target: {fileID: 122244, guid: 19ea62f66ae9d479da2f4f8f5d21d104, type: 2}
+      propertyPath: m_Name
+      value: Cannon
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 19ea62f66ae9d479da2f4f8f5d21d104, type: 2}
   m_IsPrefabAsset: 0
@@ -177,7 +181,7 @@ GameObject:
   m_Component:
   - component: {fileID: 396319185}
   m_Layer: 0
-  m_Name: Canons Holder
+  m_Name: Cannons Holder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -241,7 +245,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_TargetTemplate: {fileID: 11425190, guid: ced302d27dcf544ea91dfe0b93d272b2, type: 2}
-  m_AvailableOffsets: []
 --- !u!4 &693680791 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 478932, guid: 471adb06dc34140be885f40fe701a8a4,
@@ -317,7 +320,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 122244, guid: 19ea62f66ae9d479da2f4f8f5d21d104, type: 2}
       propertyPath: m_Name
-      value: Canon (2)
+      value: Cannon (2)
       objectReference: {fileID: 0}
     - target: {fileID: 11423428, guid: 19ea62f66ae9d479da2f4f8f5d21d104, type: 2}
       propertyPath: m_ID
@@ -381,7 +384,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 122244, guid: 19ea62f66ae9d479da2f4f8f5d21d104, type: 2}
       propertyPath: m_Name
-      value: Canon (3)
+      value: Cannon (3)
       objectReference: {fileID: 0}
     - target: {fileID: 11423428, guid: 19ea62f66ae9d479da2f4f8f5d21d104, type: 2}
       propertyPath: m_CannonballHolder
@@ -634,7 +637,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 122244, guid: 19ea62f66ae9d479da2f4f8f5d21d104, type: 2}
       propertyPath: m_Name
-      value: Canon (1)
+      value: Cannon (1)
       objectReference: {fileID: 0}
     - target: {fileID: 11423428, guid: 19ea62f66ae9d479da2f4f8f5d21d104, type: 2}
       propertyPath: m_ID

@@ -27,7 +27,7 @@ public class PoolElement : MonoBehaviour
    /////////////////////////////////////////////
    public virtual void Reset()
    {
-      gameObject.SetActive(true);      
+      gameObject.SetActive(true);
    }
 
    /////////////////////////////////////////////

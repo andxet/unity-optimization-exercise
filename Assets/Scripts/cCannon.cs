@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 
-public class cCannon : MonoBehaviour 
+public class cCannon : MonoBehaviour
 {
-	public GameObject m_CannonballHolder;
-	public cCannonball m_CannonballTemplate;
+   public GameObject m_CannonballHolder;
+   public cCannonball m_CannonballTemplate;
 
    cCannonball m_CannonBall;
    Vector3 m_cannonBallStartPosition;
@@ -11,9 +11,9 @@ public class cCannon : MonoBehaviour
    float m_fShotCooldown = 0.0f;
    Material m_mat;
 
-	void Awake()
+   void Awake()
    {
-      if(m_CannonballTemplate != null)
+      if (m_CannonballTemplate != null)
          m_CannonBall = Instantiate(m_CannonballTemplate);
 
 #if DEBUG //Let's assume that when the release is built, theese checks are passed
@@ -25,7 +25,7 @@ public class cCannon : MonoBehaviour
       }
 #endif
 
-      m_fShotCooldown = Random.Range( 0.0f, 2.0f );
+      m_fShotCooldown = Random.Range(0.0f, 2.0f);
       m_CannonBall.Deactivate();
 
       if (m_CannonballHolder != null)
@@ -38,30 +38,30 @@ public class cCannon : MonoBehaviour
    }
 
    void Update()
-	{
-		if(!m_CannonBall.Alive())
-		{
-			m_fShotCooldown -= Time.deltaTime;
+   {
+      if (!m_CannonBall.Alive())
+      {
+         m_fShotCooldown -= Time.deltaTime;
 
-			if( m_fShotCooldown <= 0.0f )
-			{
-				Fire();
-			}
-			else
-			{
+         if (m_fShotCooldown <= 0.0f)
+         {
+            Fire();
+         }
+         else
+         {
             m_mat.color = Color.white;
-			}
-		}
-	}
+         }
+      }
+   }
 
-	void Fire()
-	{
+   void Fire()
+   {
       m_CannonBall.Reset();
       m_CannonBall.transform.position = m_cannonBallStartPosition;
-		Vector3 shotForce = m_cannonBallStartForce * Random.Range( 12.0f, 15.0f );
+      Vector3 shotForce = m_cannonBallStartForce * Random.Range(12.0f, 15.0f);
       m_CannonBall.AddImpulse(shotForce);
-		m_fShotCooldown = Random.Range( 0.0f, 2.0f );
+      m_fShotCooldown = Random.Range(0.0f, 2.0f);
 
       m_mat.color = Color.red;
-	}
+   }
 }

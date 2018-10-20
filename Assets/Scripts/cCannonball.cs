@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 
-public class cCannonball : PoolElement 
+public class cCannonball : PoolElement
 {
-	public int m_ID = -1;
+   public int m_ID = -1;
    Rigidbody rbody;
 
    private void Awake()
@@ -25,29 +25,29 @@ public class cCannonball : PoolElement
    }
 
    void Update()
-	{
-		if( transform.localPosition.y < -1.0f )
-		{
-			Deactivate();
-		}
-	}
-
-	void OnTriggerEnter( Collider other ) 
-	{//TODO
-		if( other.name == "Ground" )
-		{
+   {
+      if (transform.localPosition.y < -1.0f)
+      {
          Deactivate();
       }
-		else if(  other.transform.parent != null && other.transform.parent.GetComponent<cTarget>() && other.transform.parent.GetComponent<cTarget>().IsAlive() )
-		{
-			other.transform.parent.GetComponent<cTarget>().DelayedDestroy();
+   }
+
+   void OnTriggerEnter(Collider other)
+   {//TODO
+      if (other.name == "Ground")
+      {
          Deactivate();
-		}
-	}
+      }
+      else if (other.transform.parent != null && other.transform.parent.GetComponent<cTarget>() && other.transform.parent.GetComponent<cTarget>().IsAlive())
+      {
+         other.transform.parent.GetComponent<cTarget>().DelayedDestroy();
+         Deactivate();
+      }
+   }
 
    internal void AddImpulse(Vector3 shotForce)
    {
-      if(rbody != null)
+      if (rbody != null)
          rbody.AddForce(shotForce, ForceMode.Impulse);
    }
 }
