@@ -33,16 +33,9 @@ public class cCannonball : PoolElement
    }
 
    void OnTriggerEnter(Collider other)
-   {//TODO
-      if (other.name == "Ground")
-      {
+   {
+      if (other.CompareTag("BallOpaque"))
          Deactivate();
-      }
-      else if (other.transform.parent != null && other.transform.parent.GetComponent<cTarget>() && other.transform.parent.GetComponent<cTarget>().IsAlive())
-      {
-         other.transform.parent.GetComponent<cTarget>().DelayedDestroy();
-         Deactivate();
-      }
    }
 
    internal void AddImpulse(Vector3 shotForce)

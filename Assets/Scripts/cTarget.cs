@@ -73,4 +73,10 @@ public class cTarget : PoolElement
    {
       m_manager = manager;
    }
+
+   void OnTriggerEnter(Collider other)
+   {
+      if (other.gameObject.CompareTag("Cannonball"))
+         DelayedDestroy();
+   }
 }
