@@ -6,7 +6,8 @@ public class cTarget : PoolElement
    float m_fSpeed = 1.0f;
    float m_fTargetOffsetZ = 0.0f;
    Vector3 m_fSpeedV;
-   private cTargetManager m_manager;
+   cTargetManager m_manager;
+   Material m_mat;
 
    void Awake()
    {
@@ -21,6 +22,7 @@ public class cTarget : PoolElement
       GetComponentInChildren<Renderer>().material.color = Color.white;
       m_fSpeed = Random.Range(1.3f, 2.2f);
       m_fSpeedV = new Vector3(m_fSpeed, 0.0f, 0.0f);
+      m_mat = GetComponentInChildren<Renderer>().material;
    }
 
    void Update()
@@ -41,7 +43,7 @@ public class cTarget : PoolElement
    public void DelayedDestroy()
    {
       m_bSelfDestruct = true;
-      GetComponentInChildren<Renderer>().material.color = Color.red;
+      m_mat.color = Color.red;
 
       Invoke("DestroyNow", 1.0f);
    }

@@ -3,6 +3,12 @@
 public class cCannonball : PoolElement 
 {
 	public int m_ID = -1;
+   Rigidbody rbody;
+
+   private void Awake()
+   {
+      rbody = GetComponent<Rigidbody>();
+   }
 
    public override void Reset()
    {
@@ -11,7 +17,6 @@ public class cCannonball : PoolElement
       //Reset 
       transform.rotation = Quaternion.identity;
 
-      Rigidbody rbody = GetComponent<Rigidbody>();
       if (rbody != null)
       {
          rbody.velocity = Vector3.zero;
@@ -39,4 +44,10 @@ public class cCannonball : PoolElement
          Deactivate();
 		}
 	}
+
+   internal void AddImpulse(Vector3 shotForce)
+   {
+      if(rbody != null)
+         rbody.AddForce(shotForce, ForceMode.Impulse);
+   }
 }

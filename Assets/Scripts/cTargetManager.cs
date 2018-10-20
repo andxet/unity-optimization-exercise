@@ -4,15 +4,13 @@ using UnityEngine;
 
 public class cTargetManager : MonoBehaviour
 {
-   public PoolElement m_TargetTemplate;
-   List<GameObject> m_ActiveObjectPool;
-   Queue<GameObject> m_AvailableObjectPool;
+   public cTarget m_TargetTemplate;
+   List<cTarget> m_ActiveObjectPool;
+   Queue<cTarget> m_AvailableObjectPool;
 
    const int m_NumTargets = 4;
+   float m_fPlaceNextTargetIn;
 
-   float m_fPlaceNextTargetIn = 0.0f;
-
-   public List<float> m_AvailableOffsets = new List<float>();
 
    void Awake()
    {
@@ -26,17 +24,16 @@ public class cTargetManager : MonoBehaviour
 #endif
 
       //Init the pool
-      m_AvailableObjectPool = new Queue<GameObject>();
-      m_ActiveObjectPool = new List<GameObject>();
+      m_AvailableObjectPool = new Queue<cTarget>();
+      m_ActiveObjectPool = new List<cTarget>();
       for (int i = 0; i < m_NumTargets; i++)
       {
-         PoolElement pElemet = Instantiate(m_TargetTemplate);
-         cTarget target = pElemet.GetComponent<cTarget>();
+         cTarget target = Instantiate(m_TargetTemplate);
          target.SetZOffset(15.0f - i);
          target.SetManager(this);
          target.transform.parent = transform;
          target.Deactivate();
-         m_AvailableObjectPool.Enqueue(pElemet.gameObject);
+         m_AvailableObjectPool.Enqueue(target);
       }
 
       m_fPlaceNextTargetIn = UnityEngine.Random.Range(0.0f, 1.0f);
@@ -58,18 +55,18 @@ public class cTargetManager : MonoBehaviour
 
    internal void NotifyDestroy(cTarget cTarget)
    {
-      m_ActiveObjectPool.Remove(cTarget.gameObject);
-      m_AvailableObjectPool.Enqueue(cTarget.gameObject);
+      //Move back the element to available queue
+      m_ActiveObjectPool.Remove(cTarget);
+      m_AvailableObjectPool.Enqueue(cTarget);
    }
 
    public void SpawnTarget()
    {
-      //Get the first element
-      GameObject targetInstance = m_AvailableObjectPool.Dequeue();
-      m_ActiveObjectPool.Add(targetInstance);
+      //Get the first element and move to active list
+      cTarget targetComponent = m_AvailableObjectPool.Dequeue();
+      m_ActiveObjectPool.Add(targetComponent);
 
-      cTarget targetComponent = targetInstance.GetComponent<cTarget>();
       targetComponent.Reset();
-      targetInstance.transform.position = new Vector3(-4.0f, 0.7f, targetComponent.GetZOffset());
+      targetComponent.transform.position = new Vector3(-4.0f, 0.7f, targetComponent.GetZOffset());
    }
 }
