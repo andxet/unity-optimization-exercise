@@ -24,16 +24,9 @@ public class PoolElement : MonoBehaviour
    }
 
    /////////////////////////////////////////////
-   public void Reset()
+   public virtual void Reset()
    {
-      gameObject.SetActive(true);
-      Rigidbody rbody = GetComponent<Rigidbody>();
-      transform.rotation = Quaternion.identity;
-      if(rbody != null)
-      {
-         rbody.velocity = Vector3.zero;
-         rbody.angularVelocity = Vector3.zero;
-      }
+      gameObject.SetActive(true);      
    }
 
    /////////////////////////////////////////////

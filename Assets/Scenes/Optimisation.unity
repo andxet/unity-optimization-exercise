@@ -240,7 +240,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 055ee8434486e44f597f942415bf1785, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_TargetTemplate: {fileID: 116774, guid: ced302d27dcf544ea91dfe0b93d272b2, type: 2}
+  m_TargetTemplate: {fileID: 11425190, guid: ced302d27dcf544ea91dfe0b93d272b2, type: 2}
   m_AvailableOffsets: []
 --- !u!4 &693680791 stripped
 Transform:

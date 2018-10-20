@@ -1,63 +1,74 @@
 ﻿using UnityEngine;
 
-public class cTarget : MonoBehaviour 
+public class cTarget : PoolElement
 {
-	bool m_bSelfDestruct = false;
-	float m_fSpeed = 1.0f;
-	float m_fTargetOffsetZ = 0.0f;
-	float m_fSelfDestructTimer = 0.0f;
+   bool m_bSelfDestruct = false;
+   float m_fSpeed = 1.0f;
+   float m_fTargetOffsetZ = 0.0f;
+   Vector3 m_fSpeedV;
+   private cTargetManager m_manager;
 
-	void Start()
-	{
-		m_fTargetOffsetZ = transform.position.z;
-		m_fSpeed = Random.Range( 1.3f, 2.2f );
-	}
-	
-	void Update()
-	{
-		if( m_bSelfDestruct )
-		{
-			m_fSelfDestructTimer -= Time.deltaTime;
-			
-			if( m_fSelfDestructTimer <= 0.0f )
-			{
-				m_bSelfDestruct = false;
-				DestroyNow();
-			}
-		}
-		else
-		{
-			Vector3 newPosition = transform.position + new Vector3( m_fSpeed, 0.0f, 0.0f ) * Time.deltaTime;
-			transform.position = newPosition;
+   void Awake()
+   {
+      m_fSpeed = Random.Range(1.3f, 2.2f);
+      m_fSpeedV = new Vector3(m_fSpeed, 0.0f, 0.0f);
+   }
 
-			if( transform.position.x > 3.0f )
-			{
-				DestroyNow();
-			}
-		}
-	}
+   public override void Reset()
+   {
+      base.Reset();
+      m_bSelfDestruct = false;
+      GetComponentInChildren<Renderer>().material.color = Color.white;
+      m_fSpeed = Random.Range(1.3f, 2.2f);
+      m_fSpeedV = new Vector3(m_fSpeed, 0.0f, 0.0f);
+   }
 
-	public void DelayedDestroy()
-	{	
-		m_bSelfDestruct = true;
-		m_fSelfDestructTimer = 1.0f;
+   void Update()
+   {
+      if (!m_bSelfDestruct)
+      {
+         if (transform.position.x > 3.0f)
+         {
+            DestroyNow();
+         }
+         else
+         {
+            transform.position += m_fSpeedV * Time.deltaTime;
+         }         
+      }
+   }
 
-		GetComponentInChildren<Renderer>().material.color = Color.red;
-	}
+   public void DelayedDestroy()
+   {
+      m_bSelfDestruct = true;
+      GetComponentInChildren<Renderer>().material.color = Color.red;
 
-	void DestroyNow()
-	{
-		cTargetManager targetManager = GameObject.FindObjectOfType<cTargetManager>().GetComponent<cTargetManager>();
-		if( targetManager != null )
-		{
-			targetManager.TargetDestroyed( m_fTargetOffsetZ );
-		}
-		
-		Destroy( gameObject );
-	}
-	
-	public bool IsAlive()
-	{
-		return m_bSelfDestruct == false;
-	}
+      Invoke("DestroyNow", 1.0f);
+   }
+
+   void DestroyNow()
+   {
+      m_manager.NotifyDestroy(this);
+      Deactivate();
+   }
+
+   public bool IsAlive()
+   {
+      return m_bSelfDestruct == false;
+   }
+
+   public void SetZOffset(float value)
+   {
+      m_fTargetOffsetZ = value;
+   }
+
+   public float GetZOffset()
+   {
+      return m_fTargetOffsetZ;
+   }
+
+   public void SetManager(cTargetManager manager)
+   {
+      m_manager = manager;
+   }
 }

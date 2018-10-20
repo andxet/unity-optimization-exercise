@@ -17,8 +17,20 @@ public class cCannon : MonoBehaviour
 
    void Start()
    {
+#if DEBUG //Let's assume that when the release is built, theese checks are passed
       if (/*m_CannonballHolder == null ||*/ m_CannonballTemplate == null || m_CannonBall == null)
+      {
          Debug.LogError("cCannon " + name + ": component non correctly initialized.");
+         enabled = false;
+         return;
+      }
+      if(m_CannonballTemplate.GetComponent<Rigidbody>() == null)
+      {
+         Debug.LogError("cCannon " + name + ": m_CannonballTemplate does not have a Rigidbody.");
+         enabled = false;
+         return;
+      }
+#endif
 
       if (m_CannonballHolder != null)
          m_CannonBall.transform.SetParent(m_CannonballHolder.transform);

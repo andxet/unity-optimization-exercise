@@ -1,58 +1,75 @@
-﻿using UnityEngine;
+﻿using System;
 using System.Collections.Generic;
+using UnityEngine;
 
-public class cTargetManager : MonoBehaviour 
+public class cTargetManager : MonoBehaviour
 {
-	public GameObject m_TargetTemplate;
+   public PoolElement m_TargetTemplate;
+   List<GameObject> m_ActiveObjectPool;
+   Queue<GameObject> m_AvailableObjectPool;
 
-	int m_TargetsPlaced = 0;
-	float m_fPlaceNextTargetIn = 0.0f;
+   const int m_NumTargets = 4;
 
-	public List<float> m_AvailableOffsets = new List<float>();
+   float m_fPlaceNextTargetIn = 0.0f;
 
-	void Awake()
-	{
-		m_fPlaceNextTargetIn = Random.Range( 0.0f, 1.0f );
-		for( int i = 0; i < 4; i++ )
-		{
-			m_AvailableOffsets.Add( 15.0f - i );
-		}
-	}
+   public List<float> m_AvailableOffsets = new List<float>();
 
-	void Update()
-	{
-		if( m_TargetsPlaced < 4 )
-		{
-			m_fPlaceNextTargetIn -= Time.deltaTime;
+   void Awake()
+   {
+#if DEBUG //Let's assume that when the release is built, theese checks are passed
+      if (m_TargetTemplate.GetComponent<cTarget>() == null)
+      {
+         Debug.LogError("cTargetManager " + name + ": m_TargetTemplate does not have a cTarget component.");
+         enabled = false;
+         return;
+      }
+#endif
 
-			if( m_fPlaceNextTargetIn <= 0.0f )
-			{
-				float fTargetOffset = 15.0f;
+      //Init the pool
+      m_AvailableObjectPool = new Queue<GameObject>();
+      m_ActiveObjectPool = new List<GameObject>();
+      for (int i = 0; i < m_NumTargets; i++)
+      {
+         PoolElement pElemet = Instantiate(m_TargetTemplate);
+         cTarget target = pElemet.GetComponent<cTarget>();
+         target.SetZOffset(15.0f - i);
+         target.SetManager(this);
+         target.transform.parent = transform;
+         target.Deactivate();
+         m_AvailableObjectPool.Enqueue(pElemet.gameObject);
+      }
 
-				foreach( float offset in m_AvailableOffsets )
-				{
-					fTargetOffset = offset;
-					m_AvailableOffsets.Remove( fTargetOffset );
-					break;
-				}
+      m_fPlaceNextTargetIn = UnityEngine.Random.Range(0.0f, 1.0f);
+   }
 
-				m_fPlaceNextTargetIn = Random.Range( 0.5f, 1.0f );
-				SpawnTarget( fTargetOffset );
-			}
-		}
-	}
+   void Update()
+   {
+      if (m_AvailableObjectPool.Count > 0)
+      {
+         m_fPlaceNextTargetIn -= Time.deltaTime;
 
-	public void SpawnTarget( float targetOffset )
-	{
-		GameObject targetInstance = Instantiate<GameObject>( m_TargetTemplate );
-		targetInstance.transform.position = new Vector3(-4.0f, 0.7f, targetOffset);
-		targetInstance.transform.parent = transform;
-		m_TargetsPlaced++;
-	}
+         if (m_fPlaceNextTargetIn <= 0.0f)
+         {
+            m_fPlaceNextTargetIn = UnityEngine.Random.Range(0.5f, 1.0f);
+            SpawnTarget();
+         }
+      }
+   }
 
-	public void TargetDestroyed( float zOffset )
-	{
-		m_AvailableOffsets.Add( zOffset );
-		m_TargetsPlaced--;
-	}
+   internal void NotifyDestroy(cTarget cTarget)
+   {
+      m_ActiveObjectPool.Remove(cTarget.gameObject);
+      m_AvailableObjectPool.Enqueue(cTarget.gameObject);
+   }
+
+   public void SpawnTarget()
+   {
+      //Get the first element
+      GameObject targetInstance = m_AvailableObjectPool.Dequeue();
+      m_ActiveObjectPool.Add(targetInstance);
+
+      cTarget targetComponent = targetInstance.GetComponent<cTarget>();
+      targetComponent.Reset();
+      targetInstance.transform.position = new Vector3(-4.0f, 0.7f, targetComponent.GetZOffset());
+   }
 }

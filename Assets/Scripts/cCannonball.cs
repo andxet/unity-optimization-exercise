@@ -4,7 +4,22 @@ public class cCannonball : PoolElement
 {
 	public int m_ID = -1;
 
-	void Update()
+   public override void Reset()
+   {
+      base.Reset();
+
+      //Reset 
+      transform.rotation = Quaternion.identity;
+
+      Rigidbody rbody = GetComponent<Rigidbody>();
+      if (rbody != null)
+      {
+         rbody.velocity = Vector3.zero;
+         rbody.angularVelocity = Vector3.zero;
+      }
+   }
+
+   void Update()
 	{
 		if( transform.localPosition.y < -1.0f )
 		{
@@ -13,7 +28,7 @@ public class cCannonball : PoolElement
 	}
 
 	void OnTriggerEnter( Collider other ) 
-	{
+	{//TODO
 		if( other.name == "Ground" )
 		{
          Deactivate();
